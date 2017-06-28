@@ -60,11 +60,13 @@ html
 
             div.slds-form-element
               div.slds-form-element__control
-                | Please provide information about your server and Connected App
+                | This application uses OAuth from a Connected App to retrieve data and metadata from your organization. See the 
+                a(href="https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_defining_remote_access_applications.htm") Connected Apps &nbsp;
+                | documentation for steps on configuration.
 
             div.slds-form-element(style="padding-bottom:1em;")
               div.slds-form-element__control
-                | Your Connected App MUST use the following redirect URI
+                | The Callback URL for the Connected App MUST be the following:
                 div
                   strong#redirectUri
 
