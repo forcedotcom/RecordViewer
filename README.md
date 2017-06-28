@@ -40,6 +40,10 @@ In order for OAuth authentication, SSL must be used. The server is expecting SSL
 
 
 ## Deploy to Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+## Deploy to Heroku using Docker
 All of the instructions below assume that you are within the root of the project directory.
 
 1. Install the [Heroku Toolbelt](https://toolbelt.heroku.com/)
