@@ -12,8 +12,8 @@ router.get('/', function(req, res){
 
     res.render('login', {
         title: 'Login',
-        defaultLoginUrl: req.query.loginUrl || config.defaultLoginUrl,
-        defaultConsumerKey: req.query.consumerKey || config.defaultConsumerKey,
+        defaultLoginUrl: req.query.loginUrl || config.defaultLoginUrl || '',
+        defaultConsumerKey: req.query.consumerKey || config.defaultConsumerKey || '',
         state: state,
         redirectPath: redirectPath
     });
