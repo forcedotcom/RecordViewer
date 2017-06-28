@@ -6,7 +6,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://git.soma.salesforce.com/uisdk/recordviewer.git"
+    "url": "https://github.com/cseymourSF/RecordViewer.git"
   },
   "dependencies": {
     "@salesforce-ux/design-system": "2.1.2",
@@ -45,8 +45,8 @@
     "start": "node app.js",
     "test": "mocha test"
   },
-  "homepage": "https://git.soma.salesforce.com/uisdk/recordviewer",
-  "bugs": "https://git.soma.salesforce.com/uisdk/recordviewer/issues",
+  "homepage": "https://github.com/cseymourSF/RecordViewer",
+  "bugs": "https://github.com/cseymourSF/RecordViewer/issues",
   "engines": {
     "node": "*"
   }
