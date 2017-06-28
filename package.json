@@ -1,0 +1,53 @@
+{
+  "name": "recordviewer",
+  "version": "0.0.1",
+  "description": "UI API Record View test tool",
+  "author": "chris.seymour@salesforce.com",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://git.soma.salesforce.com/uisdk/recordviewer.git"
+  },
+  "dependencies": {
+    "@salesforce-ux/design-system": "2.1.2",
+    "body-parser": "1.13.3",
+    "cookie-parser": "1.3.5",
+    "express": "4.13.3",
+    "express-session": "1.11.3",
+    "jade": "1.11.0",
+    "morgan": "1.6.1",
+    "os-homedir": "1.0.1",
+    "q": "0.8.12",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0",
+    "react-json-pretty": "^1.2.1",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
+    "redux-saga": "^0.13.0",
+    "serve-static": "1.10.0",
+    "stylus": "0.52.0",
+    "xml2js": "0.4.9"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
+    "mocha": "2.2.5",
+    "redux-devtools": "^3.3.1"
+  },
+  "scripts": {
+    "build": "browserify -t [babelify --presets ['latest' 'react' 'babel-polyfill' 'stage-2'] ] client-src/root.js -o lib/root.js",
+    "start": "node app.js",
+    "test": "mocha test"
+  },
+  "homepage": "https://git.soma.salesforce.com/uisdk/recordviewer",
+  "bugs": "https://git.soma.salesforce.com/uisdk/recordviewer/issues",
+  "engines": {
+    "node": "*"
+  }
+}

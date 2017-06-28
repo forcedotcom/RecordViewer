@@ -1,0 +1,16 @@
+doctype html
+html
+  block head
+    title Error - #{title}
+    link(rel='stylesheet', href='/libs/salesforce-ux/design-system/styles/salesforce-lightning-design-system.min.css')
+    script(type='text/javascript', src='https://code.jquery.com/jquery-2.0.3.min.js')
+  body
+    header
+      div(style='display:table; width: 100%; text-align: left;')
+        .headerCell
+          div.goHome Record Viewer
+          div powered by UI API
+    .container
+      .main-content
+        h1 Error
+        p #{message}

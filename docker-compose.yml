@@ -1,0 +1,17 @@
+web:
+  build: .
+  command: 'bash -c ''node app.js'''
+  working_dir: /app/user
+  environment:
+    PORT: 8050
+  volumes:
+    - './views:/app/user/views:ro'
+nginx:
+  build: nginx
+  ports:
+    - '8080:80'
+    - '8443:443'
+  links:
+    - web:web
+  volumes_from:
+    - web
