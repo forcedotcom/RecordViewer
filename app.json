@@ -2,5 +2,8 @@
   "name": "Record Viewer",
   "description": "An example Record View API-based node.js app",
   "image": "heroku/nodejs",
-  "addons": []
+  "addons": [],
+  "env": {
+    "NPM_CONFIG_PRODUCTION": "false"
+  }
 }

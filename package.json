@@ -42,6 +42,7 @@
   },
   "scripts": {
     "build": "browserify -t [babelify --presets ['latest' 'react' 'babel-polyfill' 'stage-2'] ] client-src/root.js -o lib/root.js",
+    "postinstall": "browserify -t [babelify --presets ['latest' 'react' 'babel-polyfill' 'stage-2'] ] client-src/root.js -o lib/root.js",
     "start": "node app.js",
     "test": "mocha test"
   },
