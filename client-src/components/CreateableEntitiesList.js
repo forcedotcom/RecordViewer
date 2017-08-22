@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-// Component that displays a list of entities for which new records may be created.
+// Component that displays a list of objects (aka entities) for which new records may be created.
 // TODO: Add click support.
 const CreateableEntitiesList = ({creds, onChange, entities}) => {
   return (
