@@ -1,7 +1,7 @@
 {
   "name": "recordviewer",
   "version": "0.0.1",
-  "description": "UI API Record View test tool",
+  "description": "User Interface API Record View test tool",
   "author": "chris.seymour@salesforce.com",
   "private": true,
   "repository": {
