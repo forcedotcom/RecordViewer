@@ -4,7 +4,7 @@ import { receiveEntities } from '../actions'
 
 export default function* entitiesFetcher(action) {
 
-  let mruUrl = action.creds.instanceUrl + '/services/data/v40.0/sobjects'
+  let mruUrl = action.creds.instanceUrl + '/services/data/v41.0/sobjects'
 
   let req = {
     method: 'GET',
