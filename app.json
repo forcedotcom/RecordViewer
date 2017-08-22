@@ -1,6 +1,6 @@
 {
   "name": "Record Viewer",
-  "description": "An example Record View API-based node.js app",
+  "description": "A node.js app that demonstrates how to use User Interface API to view, create, update, and delete Salesforce records.",
   "image": "heroku/nodejs",
   "addons": [],
   "env": {
