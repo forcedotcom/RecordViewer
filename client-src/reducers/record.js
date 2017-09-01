@@ -1,11 +1,10 @@
 import recordLayout from '../helpers/recordLayout'
 
-const record = (state = {recordId: undefined, record: undefined, mode: 'View'}, action) => {
+const record = (state = {record: undefined, mode: 'View'}, action) => {
   switch (action.type) {
     case 'RECEIVE_RECORD':
       return {
-        record: recordLayout.getLayoutModel(action.record),
-        recordId: undefined,
+        record: recordLayout.getLayoutModel(action.recordId, action.record),
         mode: 'View'
       }
     case 'RECEIVE_CREATE_DEFAULTS':

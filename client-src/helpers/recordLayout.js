@@ -15,12 +15,12 @@ function getLayoutItemModel(objectInfo, record, recordType, item) {
 
     // Component display info.
     if (component.componentType == 'Field') {
-      var compValue = component.value;
+      var compValue = component.apiName;
       var fieldInfo = objectInfo.fields[compValue];
 
       // Picklist value URL.
-      if (fieldInfo && fieldInfo.picklistValuesUrls) {
-        picklistUrl = fieldInfo.picklistValuesUrls[recordType];
+      if (fieldInfo && fieldInfo.dataType == 'Picklist') {
+        picklistUrl = '/services/data/v41.0/ui-api/object-info/' + objectInfo.apiName + '/picklist-values/' + recordType + '/' + fieldInfo.apiName;
       }
 
       // Reference link.
@@ -49,18 +49,21 @@ function getLayoutItemModel(objectInfo, record, recordType, item) {
            editableForUpdate:item.editableForUpdate,
            isNull:currValue == null});
       } else if (record.fields[compValue]) {
-        var formattedData = record.fields[compValue].displayValue;
-        var currValue = formattedData ? formattedData : record.fields[compValue].value;
+        var displayValue = record.fields[compValue].displayValue;
+        let rawValue = record.fields[compValue].value;
+        if (displayValue == null && rawValue != null) {
+          displayValue = rawValue.toString();
+        }
         values.push(
-          {displayValue: currValue,
-           value: record.fields[compValue].value,
+          {displayValue: displayValue,
+           value: rawValue,
            label:component.label,
            field:compValue,
            fieldInfo,
            picklistUrl,
            editableForNew:item.editableForNew,
            editableForUpdate:item.editableForUpdate,
-           isNull:currValue == null})
+           isNull:displayValue == null})
       } else {
         console.log('Missing expected field: ' + compValue);
       }
@@ -69,13 +72,13 @@ function getLayoutItemModel(objectInfo, record, recordType, item) {
       customLinkUrl = component.customLinkUrl;
       linkText = component.label;
     } else if (component.componentType == 'Canvas') {
-      customText = 'Canvas: ' + component.value;
+      customText = 'Canvas: ' + component.apiName;
     } else if (component.componentType == 'EmptySpace') {
       customText = '';
     } else if (component.componentType == 'VisualforcePage') {
-      customText = 'VF Page: ' + component.value;
+      customText = 'VF Page: ' + component.apiName;
     } else if (component.componentType == 'ReportChart') {
-      customText = 'Report Chart: ' + component.value;
+      customText = 'Report Chart: ' + component.apiName;
     }
   });
 
@@ -159,11 +162,12 @@ function getLayoutModelForDefaults(defaults) {
   }
 }
 
-function getLayoutModel(recordView) {
-  let entityEntry = recordView.layouts[Object.keys(recordView.layouts)[0]];
-  let objectInfo = recordView.objectInfos[Object.keys(recordView.objectInfos)[0]];
-  let record = recordView.records[Object.keys(recordView.records)[0]];
-
+function getLayoutModel(recordId, recordView) {
+  let record = recordView.records[recordId];
+  let apiName = record.apiName;
+  let entityEntry = recordView.layouts[apiName];
+  let objectInfo = recordView.objectInfos[apiName];
+  
   let recordType = '012000000000000AAA'; // 'Master'
   if (record.recordTypeInfo) {
     recordType = record.recordTypeInfo.recordTypeId;
