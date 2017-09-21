@@ -1,87 +1,95 @@
-# recordviewer
-UI API record view node.js test tool
+# RecordViewer&mdash;Node.js
+This Node.js app shows you how easy it is to use the Salesforce [User Interface API](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi) to create, read, update, and delete Salesforce records.
 
+Salesforce uses User Interface API to build the Salesforce1 and Lightning Experience apps. Not only do you get data and metadata in a single response, but the response matches metadata changes made to the org by Salesforce admins. You don’t have to worry about layouts, picklists, field-level security, or sharing&mdash;all you have to do is build an app that users love.
 
-## Setup
-1. Setup [Docker](https://www.docker.com/)
-2. Create the SSL cert and key in the `nginx` folder. See the SSL Setup instructions below.
-3. Run the following Docker Compose command to build and start the servers
+## Set Up the App
 
-    ```
+1. To authenticate Record Viewer with a Salesforce org, in the org, [configure a connected app](https://help.salesforce.com/articleView?id=connected_app_overview.htm).
+    * For the Callback URL, enter `https://localhost:8443/oauth-redirect`. If you deploy the app to Heroku, Heroku will provide a different callback URL. Create a new Connected App using the Heroku callback URL.
+    * Make a note of the OAuth consumer key to enter on the home page of the Record Viewer app.
+1. Clone the RecordViewer repository.
+1. Set up [Docker](https://www.docker.com/).
+1. Create the SSL cert and key in the `nginx` folder. See [Set Up SSL](#set-up-ssl).
+1. To build and start the servers, run this Docker Compose command.
+    ```sh
     docker-compose build && docker-compose up -d
     ```
-4. After Docker finishes building and starts the containers, the web application should be available at the following address.
+1. After Docker finishes building and starts the containers, the web application is available at `https://localhost:8443/`.
 
-    ```
-    https://localhost:8443/
-    ```
 
-    ### Port Forwarding
-    If you're running docker in a VM, be sure to forward the ports exposed in your containers. The following script will forward any open ports in the boot2docker-VM.
+### Forward Ports
 
-      ```
-        for i in {49000..49900}; do
-          VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i";
-          VBoxManage modifyvm "boot2docker-vm" --natpf1 "udp-port$i,udp,,$i,,$i";
-        done
-      ```
+If you're running docker in a VM, be sure to forward the ports exposed in your containers. This script forwards open ports in the `boot2docker-VM`.
 
-## SSL Setup
-In order for OAuth authentication, SSL must be used. The server is expecting SSL key information in files `/nginx/ssl.crt` and `/nginx/ssl.key` within the project directory. Below are instructions on how to create a self-signed SSL key. See these [instructions](https://devcenter.heroku.com/articles/ssl-certificate-self) for more details.
+```sh
+for i in {49000..49900}; do
+    VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i";
+    VBoxManage modifyvm "boot2docker-vm" --natpf1 "udp-port$i,udp,,$i,,$i";
+done
+```
+
+### Set Up SSL
+
+OAuth authentication requires SSL. The server expects SSL key information in the `/nginx/ssl.crt` and `/nginx/ssl.key` files in the project directory. 
+
+To create a self-signed SSL key:
 
 1. `cd recordviewer/nginx`
-2. `openssl genrsa -des3 -passout pass:x -out server.pass.key 2048`
-3. `openssl rsa -passin pass:x -in server.pass.key -out ssl.key`
-4. `openssl req -new -key ssl.key -out server.csr`
+1. `openssl genrsa -des3 -passout pass:x -out server.pass.key 2048`
+1. `openssl rsa -passin pass:x -in server.pass.key -out ssl.key`
+1. `openssl req -new -key ssl.key -out server.csr`
 
-    when prompted for a 'challenge password', press return, leaving the password empty
+    When prompted for a 'challenge password', press return, leaving the password empty.
 
-5. `openssl x509 -req -days 365 -in server.csr -signkey ssl.key -out ssl.crt`
+1. `openssl x509 -req -days 365 -in server.csr -signkey ssl.key -out ssl.crt`
 
+For more information, see these [Creating a Self-Signed SSL Certificate](https://devcenter.heroku.com/articles/ssl-certificate-self).
 
 ## Deploy to Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-## Deploy to Heroku using Docker
+### Deploy to Heroku Using Docker
+
 All of the instructions below assume that you are within the root of the project directory.
 
-1. Install the [Heroku Toolbelt](https://toolbelt.heroku.com/)
-2. Log into Heroku through the command line
+1. Install the [Heroku CLI](https://toolbelt.heroku.com/)
+1. Log into Heroku through the command line
 
-    ```
+    ```sh
     heroku login
     ```
-3. The Docker add-on must be installed
+1. The Docker add-on must be installed
 
-    ```
+    ```sh
     heroku plugins:install heroku-docker
     ```
-4. The Heroku application must be created
+1. The Heroku application must be created
 
-    ```
+    ```sh
     heroku create
     ```
-5. Deploy the application
+1. Deploy the application
 
-    ```
+    ```sh
     heroku docker:release
     ```
 
+### (Optional) Set the Default Login URL and Consumer Key
 
-### (Optional) Setting the Default Login URL and Consumer Key
-After creating the Connected App in Salesforce, the following steps can be used to set the default Login URL and Consumer Key on the default page.
+After creating the Connected App in Salesforce, follow these steps to set the default Login URL and Consumer Key on the default page.
 
-1. Run the following command to set the Login URL
+1. To set the Login URL, run this command.
 
-    ```
+    ```sh
     heroku config:set LOGIN_URL={url}
     ```
-    where `{url}` is the URL of the server that the org is on.
+    Substitute `{url}` with the URL of the server that the org is on.
 
-2. Run the following command to set the Consumer Key
+1. To set the Consumer Key, run this command.
 
-    ```
+    ```sh
     heroku config:set CONSUMER_KEY={key}
     ```
-    where `{key}` is the value from the Consumer Key field in Connected App details.
+    Substitute `{key}` with the value from the Consumer Key field in the Connected App details.
