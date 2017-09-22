@@ -8,6 +8,9 @@ Salesforce uses User Interface API to build the Salesforce1 and Lightning Experi
 1. To authenticate Record Viewer with a Salesforce org, in the org, [configure a connected app](https://help.salesforce.com/articleView?id=connected_app_overview.htm).
     * For the Callback URL, enter `https://localhost:8443/oauth-redirect`. If you deploy the app to Heroku, Heroku will provide a different callback URL. Create a new Connected App using the Heroku callback URL.
     * Make a note of the OAuth consumer key to enter on the home page of the Record Viewer app.
+1. To allow the app to make cross-domain requests to Salesforce, in the org, choose Setup > CORS.
+   1. Click New.
+   1. For Origin URL Pattern, enter `https://localhost:8443`. If you're deploying to heroku, enter `https://*.herokuapp.com` or `https://some-domain.herokuapp.com`. 
 1. Clone the RecordViewer repository.
 1. Set up [Docker](https://www.docker.com/).
 1. Create the SSL cert and key in the `nginx` folder. See [Set Up SSL](#set-up-ssl).
