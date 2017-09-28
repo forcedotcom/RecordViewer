@@ -1,0 +1,27 @@
+doctype html
+html
+  block head
+    title Record Viewer
+
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+
+    link(rel='stylesheet', href='/libs/salesforce-ux/design-system/styles/salesforce-lightning-design-system.min.css')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
+
+    script(type='text/javascript', src='https://code.jquery.com/jquery-2.0.3.min.js')
+    script(type='text/javascript', src='root.js')
+
+  body
+    .slds-grid.slds-wrap
+      nav.slds-col.slds-size--1-of-1
+        .slds-page-header
+          p.slds-page-header__title.slds-truncate.slds-align-middle
+            a(href='/recordView') Record Viewer
+          p.slds-page-header__info powered by User Interface API
+    #root
+    script.
+      $( document ).ready(function() {
+        let rootNode = document.getElementById("root");
+        renderRoot("#{targetUrl}", "#{accessToken}", "#{recordId}", rootNode);
+      });

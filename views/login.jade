@@ -1,0 +1,85 @@
+doctype html
+html
+  block head
+    title Record Viewer - Login
+    link(rel='stylesheet', href='/libs/salesforce-ux/design-system/styles/salesforce-lightning-design-system.min.css')
+    script(type='text/javascript', src='https://code.jquery.com/jquery-2.0.3.min.js')
+    script.
+
+      function showLoginFormError(error) {
+        var loginEl = $('#loginElementContainer');
+        loginEl.addClass('slds-has-error');
+        loginEl.find('.slds-form-element__help').remove();
+        loginEl.prepend($('<span>').addClass('slds-form-element__help').text(error));
+      }
+
+      function generateRedirectUri() {
+        var hostname = /^(https?:\/\/[^\/]*)(\/.*)?/.exec(window.location.href)[1];
+        return hostname + '#{redirectPath}';
+      }
+
+      // calculate the redirect URI within the browser since we have
+      var redirectUri = generateRedirectUri();
+
+      $(document).ready(function() {
+        $('#login').click(function(e) {
+          e.preventDefault();
+
+          var loginUrl = $('#loginUrl').val().trim(),
+            clientId = $('#clientId').val().trim(),
+            authUrl = loginUrl
+              + (loginUrl.endsWith('/') ? '' : '/')
+              + 'services/oauth2/authorize?display=popup'
+              + '&response_type=token'
+              + '&client_id=' + escape(clientId)
+              + '&redirect_uri=' + escape(redirectUri)
+              + '&state=#{state}';
+
+
+          if (loginUrl.length >= 5 && loginUrl.substring(0, 5) !== 'https') {
+            return showLoginFormError('Login URL must be a secure server and the URL must start with HTTPS');
+          } else {
+            window.location.replace(authUrl)
+          }
+        });
+
+        $('#redirectUri').text(redirectUri);
+      });
+  body
+
+    .slds-grid.slds-wrap
+
+      nav.slds-col.slds-size--1-of-1
+        .slds-page-header
+          p.slds-page-header__title.slds-truncate.slds-align-middle Record Viewer
+          p.slds-page-header__info powered by User Interface API
+
+      nav.slds-col.slds-size--1-of-2(style="padding: 1em 10em 0 10em")
+        form
+          div.slds-form--horizontal
+
+            div.slds-form-element
+              div.slds-form-element__control
+                | This application uses OAuth from a Connected App to retrieve data and metadata from your organization. See the 
+                a(href="https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_defining_remote_access_applications.htm") Connected Apps &nbsp;
+                | documentation for steps on configuration.
+
+            div.slds-form-element(style="padding-bottom:1em;")
+              div.slds-form-element__control
+                | The Callback URL for the Connected App MUST be the following:
+                div
+                  strong#redirectUri
+
+            #loginElementContainer.slds-form-element
+              label.slds-form-element__label Login url
+              div.slds-form-element__control
+                input#loginUrl.slds-input(type="text", size=60, value="#{defaultLoginUrl}")
+
+            div.slds-form-element
+              label.slds-form-element__label Connected app client id / Consumer key
+              div.slds-form-element__control
+                input#clientId.slds-input(type="text", size=60, value="#{defaultConsumerKey}")
+
+            .slds-form-element
+              .slds-form-element__control
+                button#login.slds-button.slds-button--brand.slds-not-selected Login
