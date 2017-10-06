@@ -97,7 +97,7 @@ After creating the Connected App in Salesforce, follow these steps to set the de
     ```
     Substitute `{key}` with the value from the Consumer Key field in the Connected App details.
  
- ## Using the Record Viewer App
+ ## Use the Record Viewer App
  
 To view a record, click a record in the Recent Items list.
 This list contains recently used items. If you don't see any records, go to your Salesforce org and select a record or two, then return to the Record Viewer app.
