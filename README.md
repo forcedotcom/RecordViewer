@@ -96,3 +96,16 @@ After creating the Connected App in Salesforce, follow these steps to set the de
     heroku config:set CONSUMER_KEY={key}
     ```
     Substitute `{key}` with the value from the Consumer Key field in the Connected App details.
+ 
+ ## Use the Record Viewer App
+ 
+To view a record, click a record in the Recent Items list.
+This list contains recently used items. If you don't see any records, go to your Salesforce org and select a record or two, then return to the Record Viewer app.
+ 
+When viewing a record, you can click to Edit, Delete, or Clone the record. 
+ 
+To create a record, navigate to the app's home page and select an object from the dropdown. 
+User Interface API supports all custom objects and some standard objects. If you select an unsupported object, the app will let you know.
+
+To see the response from User Interface API that the app uses to build the page, click Show JSON.
+ 
