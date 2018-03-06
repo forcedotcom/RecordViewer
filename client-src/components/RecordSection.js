@@ -10,7 +10,7 @@ const RecordSection = ({section, error, editValues, picklists, onFieldValueUpdat
     <tbody>
       { section.useHeading &&
        <tr>
-         <td colSpan="4" key={'sectionHeading' + index} className="slds-text-heading--small slds-p-left--medium slds-p-top--small slds-p-botom--medium">
+         <td colSpan="4" key={'sectionHeading' + index} className="slds-text-heading--small slds-p-left--medium slds-p-top--small slds-p-bottom--medium">
            {section.heading}
          </td>
        </tr>
