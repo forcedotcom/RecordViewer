@@ -4,6 +4,7 @@ web:
   working_dir: /app/user
   environment:
     PORT: 8050
+    NGINX_PORT: 8443
   volumes:
     - './views:/app/user/views:ro'
 nginx:
