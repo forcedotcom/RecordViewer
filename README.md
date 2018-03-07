@@ -13,7 +13,6 @@ Salesforce uses User Interface API to build the Salesforce1 and Lightning Experi
    1. For Origin URL Pattern, enter `https://localhost:8443`. If you're deploying to heroku, enter `https://*.herokuapp.com` or `https://some-domain.herokuapp.com`. 
 1. Clone the RecordViewer repository.
 1. Set up [Docker](https://www.docker.com/).
-1. Create the SSL cert and key in the `nginx` folder. See [Set Up SSL](#set-up-ssl).
 1. To build and start the servers, run this Docker Compose command.
     ```sh
     docker-compose build && docker-compose up -d
@@ -31,23 +30,6 @@ for i in {49000..49900}; do
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "udp-port$i,udp,,$i,,$i";
 done
 ```
-
-### Set Up SSL
-
-OAuth authentication requires SSL. The server expects SSL key information in the `/nginx/ssl.crt` and `/nginx/ssl.key` files in the project directory. 
-
-To create a self-signed SSL key:
-
-1. `cd recordviewer/nginx`
-1. `openssl genrsa -des3 -passout pass:x -out server.pass.key 2048`
-1. `openssl rsa -passin pass:x -in server.pass.key -out ssl.key`
-1. `openssl req -new -key ssl.key -out server.csr`
-
-    When prompted for a 'challenge password', press return, leaving the password empty.
-
-1. `openssl x509 -req -days 365 -in server.csr -signkey ssl.key -out ssl.crt`
-
-For more information, see these [Creating a Self-Signed SSL Certificate](https://devcenter.heroku.com/articles/ssl-certificate-self).
 
 ## Deploy to Heroku
 
