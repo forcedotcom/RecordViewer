@@ -51,6 +51,8 @@ For more information, see these [Creating a Self-Signed SSL Certificate](https:/
 
 ## Deploy to Heroku
 
+Please note that deploying the RecordViewer app to Heroku is optional.
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ### Deploy to Heroku Using Docker
