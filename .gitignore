@@ -35,6 +35,9 @@ node_modules
 # gedit backups
 *.*~
 
+# vscode
+.vscode
+
 /nginx/*.crt
 /nginx/*.csr
 /nginx/*.key
