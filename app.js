@@ -47,7 +47,15 @@ function startHttpServer(app) {
       httpServer = http.createServer(app);
       httpServer.on('error', httpError);
       httpServer.listen(config.httpPort);
-      console.log('Server started on HTTP: ' + config.httpPort);
+
+      // if the app is being served through nginx, show the nginx information
+      // instead of the HTTP port for the app
+      if (process.env.NGINX_PORT) {
+        console.log('Server started: https://localhost:' + process.env.NGINX_PORT);
+      } else {
+        console.log('Server started on HTTP: ' + config.httpPort);
+      }
+
   } catch (e) {
     console.error('Error while starting HTTP server on ' + config.httpPort + ':');
     console.error(e);
