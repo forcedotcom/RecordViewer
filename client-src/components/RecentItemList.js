@@ -4,7 +4,7 @@ import RecentItem from './RecentItem'
 
 // Component that displays a list of recent items and supports a hook for handling a click
 // on one of them.
-const RecentItemList = ({creds, onClick, recentItems}) => {
+const RecentItemList = ({onClick, recentItems}) => {
 
   return (
     <div className="slds-m-around--large" style={{"textAlign":"center"}}>
@@ -14,7 +14,7 @@ const RecentItemList = ({creds, onClick, recentItems}) => {
           <RecentItem
             index={index}
             key={'RecentItem' + recentItem.Id}
-            onClick={() => onClick(creds, recentItem.Id)}
+            onClick={() => onClick(recentItem.Id)}
             item={recentItem} />
         )}
       </div>
@@ -23,7 +23,6 @@ const RecentItemList = ({creds, onClick, recentItems}) => {
 }
 
 RecentItemList.propTypes = {
-  creds: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   recentItems: PropTypes.object.isRequired
 }

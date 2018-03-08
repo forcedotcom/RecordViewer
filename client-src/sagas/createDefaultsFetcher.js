@@ -4,8 +4,7 @@ import { receiveCreateDefaults, showError } from '../actions'
 
 export default function* createDefaultsFetcher (action) {
 
-  // TODO: Add dynamic FormFactor.
-  let defaultsUrl = action.creds.instanceUrl + '/services/data/v41.0/ui-api/record-defaults/create/' + action.apiName + '?formFactor=Large';
+  let defaultsUrl = action.creds.instanceUrl + '/services/data/v41.0/ui-api/record-defaults/create/' + action.apiName + '?formFactor=' + action.context.formFactor;
 
   let req = {
     method: 'GET',

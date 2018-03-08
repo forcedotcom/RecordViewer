@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 
 // Component that displays a list of objects (aka entities) for which new records may be created.
 // TODO: Add click support.
-const CreateableEntitiesList = ({creds, onChange, entities}) => {
+const CreateableEntitiesList = ({onChange, entities}) => {
   return (
     <div className="slds-m-around--large" style={{"textAlign":"center"}}>
       <div style={{"display":"inline-block","textAlign":"left"}}>
@@ -11,7 +11,7 @@ const CreateableEntitiesList = ({creds, onChange, entities}) => {
         </div>
         <select
           key="createableentitieslist"
-          onChange={(event) => {if (event.target.value != "") {onChange(creds, event.target.value)}}}>
+          onChange={(event) => {if (event.target.value != "") {onChange(event.target.value)}}}>
           [
             <option key="" value="">Select an object...</option>
             { entities.sobjects.filter(x => x.createable).map((sobject) => {
@@ -27,7 +27,6 @@ const CreateableEntitiesList = ({creds, onChange, entities}) => {
 }
 
 CreateableEntitiesList.propTypes = {
-  creds: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   entities: PropTypes.object.isRequired
 }

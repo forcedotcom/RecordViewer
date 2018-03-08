@@ -28,19 +28,36 @@ export const receiveEntities = (entities) => {
   }
 }
 
-export const fetchCreateDefaults = (creds, apiName) => {
+export const updateFormFactor =(formFactor, recordId) => {
   return {
-    type: 'FETCH_CREATE_DEFAULTS',
-    creds,
-    apiName
+    type: 'UPDATE_FORM_FACTOR',
+    formFactor,
+    recordId
   }
 }
 
-export const fetchCloneDefaults = (creds, id) => {
+export const updateHeaderRecordId = (recordId) => {
+  return {
+    type: 'UPDATE_HEADER_RECORD_ID',
+    recordId
+  }
+}
+
+export const fetchCreateDefaults = (creds, apiName, context) => {
+  return {
+    type: 'FETCH_CREATE_DEFAULTS',
+    creds,
+    apiName,
+    context
+  }
+}
+
+export const fetchCloneDefaults = (creds, id, context) => {
   return {
     type: 'FETCH_CLONE_DEFAULTS',
     creds,
-    id
+    id,
+    context
   }
 }
 
@@ -66,11 +83,12 @@ export const receiveRecentItems = (recentItems) => {
   }
 }
 
-export const fetchRecord = (creds, recordId) => {
+export const fetchRecord = (creds, recordId, context) => {
   return {
     type: 'FETCH_RECORD',
     creds,
-    recordId
+    recordId,
+    context
   }
 }
 

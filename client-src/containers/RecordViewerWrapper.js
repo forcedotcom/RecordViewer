@@ -11,7 +11,9 @@ const mapStateToProps = (state) => {
     return {
       screen: 'RECORD',
       record: state.record.record,
+      headerRecordId: state.header.recordId,
       mode: state.record.mode,
+      context: state.context,
       creds: state.login,
       picklists: state.picklists,
       rawjson: state.rawjson,
@@ -22,6 +24,7 @@ const mapStateToProps = (state) => {
       screen: 'FETCH_RECORD',
       recordId: state.record.recordId,
       mode: 'View',
+      context: state.context,
       creds: state.login,
       rawjson: state.rawjson,
       error: state.error
@@ -33,6 +36,7 @@ const mapStateToProps = (state) => {
 
     return {
       screen: 'RECENT',
+      context: state.context,
       updateItems: updateItems,
       updateEntities: updateEntities,
       entities: state.entities,
@@ -46,20 +50,26 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCloneClick: (creds, id) => {
-      dispatch(actions.fetchCloneDefaults(creds, id))
+    onFetchRecord: (creds, id, context) => {
+      dispatch(actions.fetchRecord(creds, id, context))
     },
-    onFetchRecord: (creds, id) => {
-      dispatch(actions.fetchRecord(creds, id))
+    onRecordClick: (creds, id, context) => {
+      dispatch(actions.fetchRecord(creds, id, context))
     },
-    onRecordClick: (creds, id) => {
-      dispatch(actions.fetchRecord(creds, id))
+    onViewRecordClick: (creds, id, context) => {
+      dispatch(actions.fetchRecord(creds, id, context))
     },
-    onNewRecordClick: (creds, apiName) => {
-      dispatch(actions.fetchCreateDefaults(creds, apiName))
+    onFormFactorSelect: (formFactor, recordId) => {
+      dispatch(actions.updateFormFactor(formFactor, recordId))
     },
-    onCloneClick: (creds, id) => {
-      dispatch(actions.fetchCloneDefaults(creds, id))
+    onRecordIdUpdate: (recordId) => {
+      dispatch(actions.updateHeaderRecordId(recordId))
+    },
+    onNewRecordClick: (creds, apiName, context) => {
+      dispatch(actions.fetchCreateDefaults(creds, apiName, context))
+    },
+    onCloneClick: (creds, id, context) => {
+      dispatch(actions.fetchCloneDefaults(creds, id, context))
     },
     onDeleteClick: (creds, id) => {
       dispatch(actions.deleteRecord(creds, id))

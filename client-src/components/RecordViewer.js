@@ -6,6 +6,7 @@ import CreateableEntitiesList from './CreateableEntitiesList'
 import RecentItemList from './RecentItemList'
 import Record from './Record'
 import RecordButton from './RecordButton'
+import RecordHeader from './RecordHeader'
 import NotFoundError from './errors/NotFoundError'
 import PageError from './errors/PageError'
 import RecordError from './errors/RecordError'
@@ -46,12 +47,17 @@ let getFooter = (screen, error, rawjson) => {
 }
 
 // Component that displays login / recent items / record screens.
-const RecordViewer =  ({screen, updateEntities, updateItems, creds, error, record, recordId, rawjson, mode, picklists, entities, recentItems, onNewRecordClick, onCloneClick, onRecordClick, onBackClick, onDeleteClick, onEditClick, onSaveClick, onSaveNewClick, onFieldValueUpdate, onFetchEntities, onFetchPicklist, onFetchRecord, onFetchRecentItems}) => {
+const RecordViewer =  ({screen, updateEntities, updateItems, creds, error, record, recordId, headerRecordId, rawjson, mode, context, picklists, entities, recentItems, onFormFactorSelect, onRecordIdUpdate, onViewRecordClick, onNewRecordClick, onCloneClick, onRecordClick, onBackClick, onDeleteClick, onEditClick, onSaveClick, onSaveNewClick, onFieldValueUpdate, onFetchEntities, onFetchPicklist, onFetchRecord, onFetchRecentItems}) => {
   if (screen == 'RECORD') {
     let layoutMode = (mode === 'Clone') ? 'Edit' : mode;
 
     return (
       <div>
+        <RecordHeader formFactor={context.formFactor}
+              recordId={headerRecordId}
+              onFormFactorSelect={onFormFactorSelect}
+              onRecordIdUpdate={onRecordIdUpdate}
+              onViewRecordClick={(newRecordId) => onViewRecordClick(creds, newRecordId, context)}/>
         <Record recordView={record}
               layoutMode={layoutMode}
               uiMode={mode}
@@ -59,7 +65,7 @@ const RecordViewer =  ({screen, updateEntities, updateItems, creds, error, recor
               error={error}
               picklists={picklists}
               onBackClick={onBackClick}
-              onCloneClick={onCloneClick}
+              onCloneClick={(credsIn, recordIdIn) => onCloneClick(credsIn, recordIdIn, context)}
               onDeleteClick={onDeleteClick}
               onEditClick={onEditClick}
               onSaveClick={onSaveClick}
@@ -74,7 +80,7 @@ const RecordViewer =  ({screen, updateEntities, updateItems, creds, error, recor
       <div>
         <AsyncKickoff
           creds={creds}
-          doRequest={(credsIn) => onFetchRecord(credsIn, recordId)} />
+          doRequest={(credsIn) => onFetchRecord(credsIn, recordId, context)} />
         <div className="slds-spinner_container">
           <div className="slds-spinner slds-spinner--large" role="alert">
             <span className="slds-assistive-text">Loading</span>
@@ -99,13 +105,11 @@ const RecordViewer =  ({screen, updateEntities, updateItems, creds, error, recor
             doRequest={onFetchEntities} />
         }
         <RecentItemList
-           creds={creds}
            recentItems={recentItems}
-           onClick={onRecordClick} />
+           onClick={(itemRecordId) => onRecordClick(creds, itemRecordId, context)} />
         <CreateableEntitiesList
-          creds={creds}
           entities={entities}
-          onChange={onNewRecordClick} />
+          onChange={(apiName) => onNewRecordClick(creds, apiName, context)} />
         { getFooter(screen, error, rawjson) }
       </div>
     );
@@ -120,11 +124,16 @@ RecordViewer.propTypes = {
   record: PropTypes.object,
   error: PropTypes.object,
   recordId: PropTypes.string,
+  headerRecordId: PropTypes.string,
   rawjson: PropTypes.any,
   mode: PropTypes.string,
+  context: PropTypes.object,
   entities: PropTypes.object,
   recentItems: PropTypes.object,
   picklists: PropTypes.object,
+  onFormFactorSelect: PropTypes.func.isRequired,
+  onRecordIdUpdate: PropTypes.func.isRequired,
+  onViewRecordClick: PropTypes.func.isRequired,
   onRecordClick: PropTypes.func.isRequired,
   onBackClick: PropTypes.func.isRequired,
   onCloneClick: PropTypes.func.isRequired,

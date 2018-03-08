@@ -4,8 +4,7 @@ import { receiveCloneDefaults } from '../actions'
 
 export default function* cloneDefaultsFetcher (action) {
 
-  // TODO: Add dynamic FormFactor.
-  let defaultsUrl = action.creds.instanceUrl + '/services/data/v41.0/ui-api/record-defaults/clone/' + action.id + '?formFactor=Large';
+  let defaultsUrl = action.creds.instanceUrl + '/services/data/v41.0/ui-api/record-defaults/clone/' + action.id + '?formFactor=' + action.context.formFactor;
 
   let req = {
     method: 'GET',
