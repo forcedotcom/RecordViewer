@@ -43,3 +43,6 @@ node_modules
 /nginx/*.key
 
 /lib/*.js
+
+# for mac DS_Store
+.DS_Store
