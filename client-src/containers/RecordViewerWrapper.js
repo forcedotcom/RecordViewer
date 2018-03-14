@@ -12,8 +12,10 @@ const mapStateToProps = (state) => {
       screen: 'RECORD',
       record: state.record.record,
       mode: state.record.mode,
+      prevMode: state.record.prevMode,
       creds: state.login,
-      picklists: state.picklists,
+      picklists : state.picklists,
+      depGraph: state.depGraph,
       rawjson: state.rawjson,
       error: state.error
     }
@@ -46,9 +48,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCloneClick: (creds, id) => {
-      dispatch(actions.fetchCloneDefaults(creds, id))
-    },
     onFetchRecord: (creds, id) => {
       dispatch(actions.fetchRecord(creds, id))
     },
@@ -57,15 +56,19 @@ const mapDispatchToProps = (dispatch) => {
     },
     onNewRecordClick: (creds, apiName) => {
       dispatch(actions.fetchCreateDefaults(creds, apiName))
+      // hacky: default record type for now
+      dispatch(actions.fetchPicklists(creds, apiName, '012000000000000AAA'))
     },
-    onCloneClick: (creds, id) => {
+    onCloneClick: (creds, id, apiName, recordType) => {
       dispatch(actions.fetchCloneDefaults(creds, id))
+      dispatch(actions.fetchPicklists(creds, apiName, recordType))
     },
     onDeleteClick: (creds, id) => {
       dispatch(actions.deleteRecord(creds, id))
     },
-    onEditClick: () => {
-      dispatch(actions.editRecord())
+    onEditClick: (creds, apiName, recordType) => {
+      dispatch(actions.editRecord(creds, apiName, recordType))
+      dispatch(actions.fetchPicklists(creds, apiName, recordType))
     },
     onSaveClick: (creds, id, objectInfo, editValues) => {
       dispatch(actions.saveRecord(creds, id, objectInfo, editValues))
@@ -85,8 +88,14 @@ const mapDispatchToProps = (dispatch) => {
     onFieldValueUpdate: (field, value) => {
       dispatch(actions.updateFieldValue(field, value))
     },
-    onFetchPicklist: (creds, url) => {
-      dispatch(actions.fetchPicklist(creds, url));
+    onEditDepGraph: (picklists, modalFields, editValues, fieldTree, prevMode) => {
+      dispatch(actions.editDepGraph(picklists, modalFields, editValues, fieldTree, prevMode));
+    },
+    onDepGraphFieldValueUpdate: (field, value, picklists, modalFields, rootField, fieldTree) => {
+      dispatch(actions.updateDepGraphFieldValue(field, value, picklists, modalFields, rootField, fieldTree))
+    },
+    onDepGraphClose: (mode) => {
+      dispatch(actions.closeDepGraph(mode))
     }
   }
 }

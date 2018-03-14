@@ -14,10 +14,10 @@ const CreateableEntitiesList = ({creds, onChange, entities}) => {
           onChange={(event) => {if (event.target.value != "") {onChange(creds, event.target.value)}}}>
           [
             <option key="" value="">Select an object...</option>
-            { entities.sobjects.filter(x => x.createable).map((sobject) => {
+            { Object.keys(entities.sobjects).map(function (key) {
             return <option
-              key={sobject.name}
-              value={sobject.name}>{sobject.label}</option>
+              key={entities.sobjects[key].apiName}
+              value={entities.sobjects[key].apiName}>{entities.sobjects[key].label}</option>
             })}
           ]
         </select>

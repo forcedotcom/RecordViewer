@@ -4,7 +4,7 @@ import { recordCreateSuccess, showError } from '../actions'
 
 export default function* recordCreator (action) {
 
-  let recordDataUrl = action.creds.instanceUrl + '/services/data/v41.0/ui-api/records/';
+  let recordDataUrl = action.creds.instanceUrl + '/services/data/v42.0/ui-api/records/';
 
   var recordInput = {};
   recordInput.apiName = action.apiName;

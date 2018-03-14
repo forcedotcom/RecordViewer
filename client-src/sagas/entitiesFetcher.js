@@ -4,12 +4,13 @@ import { receiveEntities } from '../actions'
 
 export default function* entitiesFetcher(action) {
 
-  let mruUrl = action.creds.instanceUrl + '/services/data/v41.0/sobjects'
+  let mruUrl = action.creds.instanceUrl + '/services/data/v42.0/ui-api/object-info'
 
   let req = {
     method: 'GET',
     headers: {
-      'Authorization' : 'Bearer ' + action.creds.accessToken}
+      'Authorization' : 'Bearer ' + action.creds.accessToken,
+      'X-Chatter-Entity-Encoding': false}
     }
 
   try {
