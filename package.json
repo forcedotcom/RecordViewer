@@ -28,7 +28,7 @@
     "redux": "^3.6.0",
     "redux-saga": "^0.13.0",
     "serve-static": "^1.10.0",
-    "stylus": "^0.52.4",
+    "stylus": "^0.54.3",
     "xml2js": "0.4.9"
   },
   "devDependencies": {
