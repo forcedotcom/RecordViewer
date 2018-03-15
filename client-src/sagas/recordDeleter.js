@@ -4,7 +4,7 @@ import { finishedRecordDelete } from '../actions'
 
 export default function* recordDeleter (action) {
 
-  let recordUrl = action.creds.instanceUrl + '/services/data/v41.0/ui-api/records/' + action.recordId
+  let recordUrl = action.creds.instanceUrl + '/services/data/v42.0/ui-api/records/' + action.recordId
   let req = {
     method: 'DELETE',
     headers: {

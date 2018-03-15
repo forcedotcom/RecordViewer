@@ -1,9 +1,12 @@
-const picklists = (state = {}, action) => {
+const picklists = (state = {values: undefined}, action) => {
   switch (action.type) {
-    case 'RECEIVE_PICKLIST':
+    case 'RECEIVE_PICKLISTS':
       return {
-        ...state,
-        [action.url]: action.result
+        fieldValues : action.result.picklistFieldValues
+      }
+    case 'FETCH_PICKLISTS': // clear when new collection is requested
+      return {
+        fieldValues: undefined
       }
     default:
       return state

@@ -47,10 +47,10 @@ All of the instructions below assume that you are within the root of the project
     ```sh
     heroku login
     ```
-1. The Docker add-on must be installed
+1. Log into the Heroku Container Registry
 
     ```sh
-    heroku plugins:install heroku-docker
+    heroku container:login
     ```
 1. The Heroku application must be created
 
@@ -60,7 +60,7 @@ All of the instructions below assume that you are within the root of the project
 1. Deploy the application
 
     ```sh
-    heroku docker:release
+    heroku container:push web
     ```
 
 ### (Optional) Set the Default Login URL and Consumer Key

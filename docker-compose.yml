@@ -1,7 +1,7 @@
 web:
   build: .
   command: 'bash -c ''node app.js'''
-  working_dir: /app/user
+  working_dir: /usr/src/app
   environment:
     PORT: 8050
     NGINX_PORT: 8443
