@@ -56,14 +56,38 @@ const RecordViewer =  ({screen, updateEntities, updateItems, creds, error, recor
     } else {
       layoutMode = mode;
     }
-    
-    return (
-      <div>
-        <RecordHeader formFactor={context.formFactor}
-              recordId={headerRecordId}
-              onFormFactorSelect={onFormFactorSelect}
-              onRecordIdUpdate={onRecordIdUpdate}
-              onViewRecordClick={(newRecordId) => onViewRecordClick(creds, newRecordId, context)}/>
+    if (layoutMode == "View"){
+      return (
+        <div>
+          <RecordHeader formFactor={context.formFactor}
+                recordId={headerRecordId}
+                onFormFactorSelect={onFormFactorSelect}
+                onRecordIdUpdate={onRecordIdUpdate}
+                onViewRecordClick={(newRecordId) => onViewRecordClick(creds, newRecordId, context)}/>
+          <Record recordView={record}
+                layoutMode={layoutMode}
+                uiMode={mode}
+                prevMode={prevMode}
+                creds={creds}
+                error={error}
+                picklists={picklists}
+                depGraph={depGraph}
+                onBackClick={onBackClick}
+                onCloneClick={(credsIn, recordIdIn, apiNameIn, recordTypeIn) => onCloneClick(credsIn, recordIdIn, apiNameIn, recordTypeIn, context)}
+                onDeleteClick={onDeleteClick}
+                onEditClick={onEditClick}
+                onSaveClick={onSaveClick}
+                onSaveNewClick={onSaveNewClick}
+                onFieldValueUpdate={onFieldValueUpdate}
+                onEditDepGraph={onEditDepGraph}
+                onDepGraphFieldValueUpdate={onDepGraphFieldValueUpdate}
+                onDepGraphClose={onDepGraphClose} />
+          { getFooter(screen, error, rawjson) }
+        </div>
+      );
+    } else {
+      return (
+        <div>
         <Record recordView={record}
               layoutMode={layoutMode}
               uiMode={mode}
@@ -84,7 +108,8 @@ const RecordViewer =  ({screen, updateEntities, updateItems, creds, error, recor
               onDepGraphClose={onDepGraphClose} />
         { getFooter(screen, error, rawjson) }
       </div>
-    );
+      );
+    }
   } else if (screen == 'FETCH_RECORD') {
     return (
       <div>
