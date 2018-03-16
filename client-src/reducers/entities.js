@@ -2,7 +2,7 @@ const entities = (state = {sobjects: []}, action) => {
   switch (action.type) {
     case 'RECEIVE_ENTITIES':
       return {
-        sobjects: action.entities.sobjects,
+        sobjects: action.entities.objects,
         receivedAt: action.receivedAt
       }
     default:

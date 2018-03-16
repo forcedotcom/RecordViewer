@@ -33,7 +33,7 @@ module.exports = {
     defaultConsumerKey: process.env.CONSUMER_KEY,
 
     // API version
-    currentVersion: 41,
+    currentVersion: 42,
 
     proxySettings: proxySettings
 };

@@ -88,9 +88,9 @@ function httpError(exception, socket) {
 
 var app = express();
 
-// use Jade view templates
+// use Pug view templates
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 // make JSON bodies and cookies available in req objects
 app.use(bodyParser.urlencoded({

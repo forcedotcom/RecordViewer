@@ -1,6 +1,6 @@
 import recordLayout from '../helpers/recordLayout'
 
-const record = (state = {record: undefined, mode: 'View'}, action) => {
+const record = (state = {record: undefined, mode: 'View', prevMode: undefined}, action) => {
   switch (action.type) {
     case 'RECEIVE_RECORD':
       return {
@@ -21,6 +21,18 @@ const record = (state = {record: undefined, mode: 'View'}, action) => {
       return {
         ...state,
         mode: 'Edit'
+      }
+    case 'EDIT_DEP_GRAPH':
+      return {
+        ...state,
+        prevMode: action.prevMode, // save previous mode to return to on close
+        mode: 'EditDepGraph'
+      }
+    case 'CLOSE_DEP_GRAPH':
+      return {
+        ...state,
+        prevMode: undefined,
+        mode: action.mode
       }
     case 'CLEAR_RECORD':
       return {

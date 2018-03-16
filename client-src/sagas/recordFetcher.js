@@ -5,7 +5,9 @@ import { receiveRecord } from '../actions'
 
 export default function* recordFetcher (action) {
 
-  let recordViewUrl = action.creds.instanceUrl + '/services/data/v41.0/ui-api/record-ui/' + action.recordId + '?formFactor=' + action.context.formFactor + '&modes=View,Edit';
+  // TODO: Add LayoutType to the state so that we can change view based on them
+  let recordViewUrl = action.creds.instanceUrl + '/services/data/v42.0/ui-api/record-ui/' + action.recordId + '?formFactor=' + action.context.formFactor + '&modes=View,Edit';
+  
   let req = {
     method: 'GET',
     headers: {
