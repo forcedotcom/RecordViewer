@@ -46,33 +46,85 @@ const getViewItemCells = (item, itemLabel, nonEmptyItem) => {
   }
 }
 
-const getEditComponent = (component, picklists, onFetchPicklist, onFieldValueUpdate, editValues, itemLabel, i) => {
-  if (component.picklistUrl) {
-    let value = editValues[component.field].current;
-    if (value == null) {
-      value = "";
-    }
+const getFlattenedTree = (objectInfo, fieldTree, rootField) => {
+  const flattenedTree = []
+  flattenedTree.push(objectInfo.fields[rootField])
+  doFlattenTree(objectInfo, fieldTree, flattenedTree)
+  return flattenedTree
+}
 
-    let picklistValues = [];
-    let hasPicklistValues = false;
-    if (picklists[component.picklistUrl]) {
-      picklistValues = picklists[component.picklistUrl].values;
-      hasPicklistValues = true;
+const doFlattenTree = (objectInfo, tree, flattenedTree) => {
+  if (tree) {
+    let treeKeys = Object.keys(tree)
+    for (var treeKey in treeKeys){
+      flattenedTree.push(objectInfo.fields[treeKeys[treeKey]])
+      doFlattenTree(objectInfo, tree[treeKeys[treeKey]], flattenedTree)
+    }
+  }
+}
+
+const getEditComponent = (component, picklists, onFieldValueUpdate, editValues, itemLabel, i, objectInfo, onEditDepGraph, uiMode, recordView) => {
+  let isPicklist = (component.fieldInfo && component.fieldInfo.dataType == 'Picklist');
+  let currPicklistValue = "";
+  let picklistValues = [];
+
+  if (isPicklist) {
+    currPicklistValue = editValues[component.field].current;
+    if (currPicklistValue == null) {
+      currPicklistValue = "";
+    }
+    
+    if (picklists.fieldValues && picklists.fieldValues[component.field]) {
+      picklistValues = picklists.fieldValues[component.field].values;
     } else {
+      // picklist collection fetch has not completed yet, or the field is somehow missing from its results.
       // add the current value so that it shows nicely in the UI.
       picklistValues.push({value: component.value, label: component.displayValue})
     }
+  }
 
+  if (objectInfo 
+    && ((component.field && component.field in objectInfo.dependentFields)
+       || (component.fieldInfo && component.fieldInfo.controllingFields.length > 0))) {
+    // last field in controlling fields is the root field
+    let lastControllingIndex =  component.fieldInfo.controllingFields.length - 1
+    let rootField = null
+    if (component.field in objectInfo.dependentFields){
+      rootField = component.field
+    } else {
+      rootField = component.fieldInfo.controllingFields[lastControllingIndex]
+    }
+    
+    // retrieve the picklist fields that need to show up
+    const subfieldTree = objectInfo.dependentFields[rootField]
+    const modalFields = getFlattenedTree(objectInfo, subfieldTree, rootField)
+
+    // open a modal on click of input field
+    let fieldTree = {}
+    fieldTree[rootField] = subfieldTree
+  
+    return (
+      <div>
+        <label
+          key={'componentInput' + itemLabel + ',' + i}
+          onClick={(event) => onEditDepGraph(picklists, modalFields, editValues, fieldTree, uiMode.toString())}
+          value={currPicklistValue}>
+          {editValues[component.field].current}
+        </label>
+        <button className="fa fa-pencil"
+        key={'componentInput' + itemLabel + 'button,' + i}
+        onClick={(event) => onEditDepGraph(picklists, modalFields, editValues, fieldTree, uiMode.toString())}>
+        </button>
+      </div>
+    );
+  }
+
+  if (isPicklist) {
     return (
       <select
         key={component.picklistUrl}
-        value={value}
-        onChange={(event) => onFieldValueUpdate(component.field, event.target.value)}
-        onFocus={(event) => {
-          if (!hasPicklistValues) {
-            onFetchPicklist(component.picklistUrl);
-          }
-        }} >
+        value={currPicklistValue}
+        onChange={(event) => onFieldValueUpdate(component.field, event.target.value)}>
         { picklistValues.map((picklistValue) => {
           return <option
             key={picklistValue.value}
@@ -86,10 +138,14 @@ const getEditComponent = (component, picklists, onFetchPicklist, onFieldValueUpd
     if (currentVal != null) {
       currentValStr = currentVal.toString();
     }
-
+    let componentType = 'text'
+    if(component && component.fieldInfo.dataType == "Boolean") {
+      componentType = 'checkbox'
+      currentValStr = currentVal;
+    }
     return (
       <input
-        type="text"
+        type={componentType}
         className="fieldEdit"
         name={component.field}
         value={currentValStr}
@@ -101,7 +157,7 @@ const getEditComponent = (component, picklists, onFetchPicklist, onFieldValueUpd
   }
 }
 
-const getEditItemCells = (item, picklists, onFetchPicklist, onFieldValueUpdate, error, editValues, itemLabel, nonEmptyItem) => {
+const getEditItemCells = (item, picklists, onFieldValueUpdate, error, editValues, itemLabel, nonEmptyItem, objectInfo, onEditDepGraph, uiMode, recordView) => {
   return (
     <td className="slds-cell-wrap" key={'editItemCell' + itemLabel} style={{"maxWidth":"350px"}}>
       { item.customLinkUrl &&
@@ -119,7 +175,7 @@ const getEditItemCells = (item, picklists, onFetchPicklist, onFieldValueUpdate, 
                   <span className="slds-required">*</span>
                 }
                 { component.editableForUpdate &&
-                  getEditComponent(component, picklists, onFetchPicklist, onFieldValueUpdate, editValues, itemLabel, i)
+                  getEditComponent(component, picklists, onFieldValueUpdate, editValues, itemLabel, i, objectInfo, onEditDepGraph, uiMode, recordView)
                 }
                 { !component.editableForUpdate &&
                   <label key={'component' + itemLabel + ',' + i}>{component.displayValue}</label>
@@ -144,8 +200,7 @@ const getEditItemCells = (item, picklists, onFetchPicklist, onFieldValueUpdate, 
 // Component that displays a Record row. May include multiple items. JSX doesn't allow us to return
 // fragments made up of multiple <td>s without wrapping them in a single element so we can't break out
 // RecordItem into a separate component.
-const RecordRow = ({row, allowEdit, error, editValues, picklists, onFetchPicklist, onFieldValueUpdate, sectionIndex, rowIndex}) => {
-
+const RecordRow = ({row, allowEdit, error, editValues, picklists, onFieldValueUpdate, sectionIndex, rowIndex, objectInfo, onEditDepGraph, uiMode, recordView}) => {
   let rowLabel = sectionIndex + ',' + rowIndex;
 
   return (
@@ -156,7 +211,7 @@ const RecordRow = ({row, allowEdit, error, editValues, picklists, onFetchPicklis
          if (!allowEdit) {
            return getViewItemCells(item, itemLabel, nonEmptyItem);
          } else {
-           return getEditItemCells(item, picklists, onFetchPicklist, onFieldValueUpdate, error, editValues, itemLabel, nonEmptyItem);
+           return getEditItemCells(item, picklists, onFieldValueUpdate, error, editValues, itemLabel, nonEmptyItem, objectInfo, onEditDepGraph, uiMode, recordView);
         }
       })}
     </tr>
@@ -168,11 +223,14 @@ RecordRow.propTypes = {
   error: PropTypes.object.isRequired,
   allowEdit: PropTypes.bool.isRequired,
   editValues: PropTypes.object.isRequired,
-  picklists: PropTypes.object.isRequired,
+  picklists: PropTypes.object,
   sectionIndex: PropTypes.number.isRequired,
   rowIndex: PropTypes.number.isRequired,
   onFieldValueUpdate: PropTypes.func.isRequired,
-  onFetchPicklist: PropTypes.func.isRequired
+  objectInfo: PropTypes.object.isRequired,
+  onEditDepGraph: PropTypes.func.isRequired,
+  uiMode: PropTypes.string.isRequired,
+  recordView: PropTypes.object.isRequired 
 }
 
 export default RecordRow

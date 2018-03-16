@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import JSONPretty from 'react-json-pretty';
-
+import Inspector from 'react-json-inspector';
 import AsyncKickoff from '../containers/AsyncKickoff'
 import CreateableEntitiesList from './CreateableEntitiesList'
 import RecentItemList from './RecentItemList'
@@ -30,7 +30,7 @@ let getFooter = (screen, error, rawjson) => {
         { errorNode }
         <RecordButton key="showJsonButton" label='Show JSON' onClick={() => $(".raw").toggle()} />
         <div className="raw" style={{"display":"none"}}>
-          <JSONPretty key="rawjson" json={rawjson} />
+          <Inspector key="rawjson" data={rawjson} />
         </div>
       </div>
       );
@@ -39,42 +39,55 @@ let getFooter = (screen, error, rawjson) => {
       <div className="slds-p-left--medium slds-p-top--small slds-p-botom--medium">
         <RecordButton key="showJsonButton" label='Show JSON' onClick={() => $(".raw").toggle()} />
         <div className="raw" style={{"display":"none"}}>
-          <JSONPretty key="rawjson" json={rawjson} />
+          <Inspector key="rawjson" data={rawjson} />
         </div>
       </div>
       );
   }
 }
 
-// Component that displays login / recent items / record screens.
-const RecordViewer =  ({screen, updateEntities, updateItems, creds, error, record, recordId, headerRecordId, rawjson, mode, context, picklists, entities, recentItems, onFormFactorSelect, onRecordIdUpdate, onViewRecordClick, onNewRecordClick, onCloneClick, onRecordClick, onBackClick, onDeleteClick, onEditClick, onSaveClick, onSaveNewClick, onFieldValueUpdate, onFetchEntities, onFetchPicklist, onFetchRecord, onFetchRecentItems}) => {
+const RecordViewer =  ({screen, updateEntities, updateItems, creds, error, record, recordId, headerRecordId, rawjson, mode, context, picklists, depGraph, entities, recentItems, onFormFactorSelect, onRecordIdUpdate, onViewRecordClick, onNewRecordClick, onCloneClick, onRecordClick, onBackClick, onDeleteClick, onEditClick, onSaveClick, onSaveNewClick, onFieldValueUpdate, onDepGraphFieldValueUpdate, onFetchEntities, onFetchPicklist, onFetchRecord, onFetchRecentItems, onEditDepGraph, onDepGraphClose, prevMode}) => {
   if (screen == 'RECORD') {
-    let layoutMode = (mode === 'Clone') ? 'Edit' : mode;
+    let layoutMode;
+    if (mode === 'EditDepGraph') {
+      layoutMode = prevMode;
+    } else if (mode === 'Clone') {
+      layoutMode = 'Edit';
+    } else {
+      layoutMode = mode;
+    }
 
     return (
       <div>
-        <RecordHeader formFactor={context.formFactor}
-              recordId={headerRecordId}
-              onFormFactorSelect={onFormFactorSelect}
-              onRecordIdUpdate={onRecordIdUpdate}
-              onViewRecordClick={(newRecordId) => onViewRecordClick(creds, newRecordId, context)}/>
+        {layoutMode == "View" && 
+          <RecordHeader formFactor={context.formFactor}
+                recordId={headerRecordId}
+                onFormFactorSelect={onFormFactorSelect}
+                onRecordIdUpdate={onRecordIdUpdate}
+                onViewRecordClick={(newRecordId) => onViewRecordClick(creds, newRecordId, context)}/>
+        }
         <Record recordView={record}
               layoutMode={layoutMode}
               uiMode={mode}
+              prevMode={prevMode}
               creds={creds}
               error={error}
               picklists={picklists}
+              depGraph={depGraph}
               onBackClick={onBackClick}
-              onCloneClick={(credsIn, recordIdIn) => onCloneClick(credsIn, recordIdIn, context)}
+              onCloneClick={(credsIn, recordIdIn, apiNameIn, recordTypeIn) => onCloneClick(credsIn, recordIdIn, apiNameIn, recordTypeIn, context)}
               onDeleteClick={onDeleteClick}
               onEditClick={onEditClick}
               onSaveClick={onSaveClick}
               onSaveNewClick={onSaveNewClick}
               onFieldValueUpdate={onFieldValueUpdate}
-              onFetchPicklist={onFetchPicklist}/>
+              onEditDepGraph={onEditDepGraph}
+              onDepGraphFieldValueUpdate={onDepGraphFieldValueUpdate}
+              onDepGraphClose={onDepGraphClose} />
         { getFooter(screen, error, rawjson) }
       </div>
     );
+    
   } else if (screen == 'FETCH_RECORD') {
     return (
       <div>
@@ -134,6 +147,7 @@ RecordViewer.propTypes = {
   onFormFactorSelect: PropTypes.func.isRequired,
   onRecordIdUpdate: PropTypes.func.isRequired,
   onViewRecordClick: PropTypes.func.isRequired,
+  depGraph: PropTypes.object,
   onRecordClick: PropTypes.func.isRequired,
   onBackClick: PropTypes.func.isRequired,
   onCloneClick: PropTypes.func.isRequired,
@@ -145,8 +159,10 @@ RecordViewer.propTypes = {
   onFetchEntities: PropTypes.func.isRequired,
   onFetchRecentItems: PropTypes.func.isRequired,
   onFieldValueUpdate: PropTypes.func.isRequired,
-  onFetchPicklist: PropTypes.func.isRequired,
-  onFetchRecord: PropTypes.func.isRequired
+  onDepGraphFieldValueUpdate: PropTypes.func.isRequired,
+  onDepGraphClose: PropTypes.func.isRequired,
+  onFetchRecord: PropTypes.func.isRequired,
+  onEditDepGraph: PropTypes.func.isRequired
 }
 
 export default RecordViewer

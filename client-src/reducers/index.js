@@ -5,10 +5,11 @@ import context from './context'
 import header from './header'
 import recentitems from './recentitems'
 import record from './record'
-import picklists from './picklists'
 import entities from './entities'
 import rawjson from './rawjson'
 import error from './error'
+import picklists from './picklists.js'
+import depGraph from './depGraph.js'
 
 export default combineReducers( {
   login,
@@ -19,5 +20,6 @@ export default combineReducers( {
   picklists,
   entities,
   rawjson,
-  error
+  error,
+  depGraph
 })

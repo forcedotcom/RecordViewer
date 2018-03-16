@@ -148,9 +148,12 @@ export const finishedRecordDelete = () => {
   }
 }
 
-export const editRecord = () => {
+export const editRecord = (creds, apiName, recordType) => {
   return {
-    type: 'EDIT_RECORD'
+    type: 'EDIT_RECORD',
+    creds,
+    apiName,
+    recordType
   }
 }
 
@@ -162,6 +165,25 @@ export const updateFieldValue = (field, value) => {
   }
 }
 
+export const updateDepGraphFieldValue = (field, value, editValues, picklists, modalFields, fieldTree) => {
+  return {
+    type: 'UPDATE_DEP_GRAPH_FIELD_VALUE',
+    field,
+    value,
+    picklists,
+    modalFields,
+    editValues,
+    fieldTree
+  }
+}
+
+export const updatePicklistFields = (picklistFields) => {
+  return {
+    type: 'UPDATE_PICKLIST_FIELDS',
+    picklistFields
+  }
+}
+
 export const recordUpdateSuccess = (recordData) => {
   return {
     type: 'RECORD_UPDATE_SUCCESS',
@@ -169,19 +191,38 @@ export const recordUpdateSuccess = (recordData) => {
   }
 }
 
-export const fetchPicklist = (creds, url) => {
+export const fetchPicklists = (creds, apiName, recordType) => {
   return {
-    type: 'FETCH_PICKLIST',
+    type: 'FETCH_PICKLISTS',
     creds,
-    url
+    apiName,
+    recordType
   }
 }
 
-export const receivePicklist = (url, result) => {
+export const receivePicklists = (url, result) => {
   return {
-    type: 'RECEIVE_PICKLIST',
+    type: 'RECEIVE_PICKLISTS',
     url,
     result
+  }
+}
+
+export const editDepGraph = (picklists, modalFields, editValues, fieldTree, prevMode) => {
+  return {
+    type: 'EDIT_DEP_GRAPH',
+    picklists,
+    modalFields,
+    editValues,
+    fieldTree,
+    prevMode
+  }
+}
+
+export const closeDepGraph = (mode) => {
+  return {
+    type: 'CLOSE_DEP_GRAPH',
+    mode
   }
 }
 

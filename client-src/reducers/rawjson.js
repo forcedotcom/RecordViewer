@@ -10,6 +10,8 @@ const rawjson = (state = null, action) => {
       return action.defaults;
     case 'RECEIVE_CREATE_DEFAULTS':
       return action.defaults;
+    case 'RECEIVE_PICKLISTS':
+      return action.result;
     default:
       return null;
   }
