@@ -171,7 +171,7 @@ const getEditItemCells = (item, picklists, onFieldValueUpdate, error, editValues
             <tr key={"editItemTableRow" + itemLabel + ',' + i}>
               <td key={"editItemTableLabel" + itemLabel + ',' + i} className="slds-cell-wrap" style={{"width":"100px"}}>{component.label}</td>
               <td key={"editItemTableValue" + itemLabel + ',' + i} className="slds-cell-wrap" style={{"width":"250px"}}>
-                { component.fieldInfo.required &&
+                { component.required &&
                   <span className="slds-required">*</span>
                 }
                 { component.editableForUpdate &&

@@ -39,6 +39,7 @@ function getLayoutItemModel(objectInfo, record, recordType, item) {
              fieldInfo,
              editableForNew:item.editableForNew,
              editableForUpdate:item.editableForUpdate,
+             required:item.required,
              isNull:currValue == null});
         } else if (record.fields[compValue]) {
           var displayValue = record.fields[compValue].displayValue;
@@ -54,6 +55,7 @@ function getLayoutItemModel(objectInfo, record, recordType, item) {
              fieldInfo,
              editableForNew:item.editableForNew,
              editableForUpdate:item.editableForUpdate,
+             required:item.required,
              isNull:displayValue == null})
         } else {
           console.log('Missing expected field: ' + compValue);
