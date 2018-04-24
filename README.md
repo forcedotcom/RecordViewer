@@ -31,9 +31,7 @@ for i in {49000..49900}; do
 done
 ```
 
-## Deploy to Heroku
-
-Please note that deploying the RecordViewer app to Heroku is optional.
+## (Optional) Deploy to Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
