@@ -17,7 +17,7 @@
     "morgan": "^1.6.1",
     "os-homedir": "^1.0.1",
     "pug": "^2.0.1",
-    "q": "0.8.12",
+    "q": "1.5.1",
     "react": "^15.4.0",
     "react-bootstrap": "0.13.3",
     "react-dom": "^15.4.0",
@@ -29,7 +29,7 @@
     "redux-saga": "^0.13.0",
     "serve-static": "^1.10.0",
     "stylus": "^0.54.3",
-    "xml2js": "0.4.9"
+    "xml2js": "0.4.19"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
