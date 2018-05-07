@@ -86,8 +86,8 @@ function httpError(exception, socket) {
   console.error('An error occurred with the HTTP server:\n' + exception);
 }
 
+var jquery = require('jquery');
 var app = express();
-
 // use Pug view templates
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
@@ -109,6 +109,7 @@ app.use(morgan('dev'));
 
 // statically serve SLDS, the files in /public, and the babel-ified js in /lib
 app.use('/libs/salesforce-ux/design-system', serveStatic(__dirname + '/node_modules/@salesforce-ux/design-system/assets'))
+app.use('/libs/jquery', serveStatic(__dirname + '/node_modules/jquery/dist/'))
 app.use(serveStatic(__dirname + '/public'));
 app.use(serveStatic(__dirname + '/lib'));
 
