@@ -86,7 +86,6 @@ function httpError(exception, socket) {
   console.error('An error occurred with the HTTP server:\n' + exception);
 }
 
-var jquery = require('jquery');
 var app = express();
 // use Pug view templates
 app.set('views', __dirname + '/views');
