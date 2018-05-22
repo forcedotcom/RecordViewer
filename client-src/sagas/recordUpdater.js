@@ -4,7 +4,7 @@ import { recordUpdateSuccess, showError } from '../actions'
 
 export default function* recordUpdater (action) {
 
-  let recordDataUrl = action.creds.instanceUrl + '/services/data/v42.0/ui-api/records/' + action.recordId;
+  let recordDataUrl = action.creds.instanceUrl + '/services/data/v43.0/ui-api/records/' + action.recordId;
 
   var recordInput = {};
   recordInput.fields = {};

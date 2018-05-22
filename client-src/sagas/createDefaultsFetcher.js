@@ -4,7 +4,7 @@ import { receiveCreateDefaults, showError } from '../actions'
 
 export default function* createDefaultsFetcher (action) {
 
-  let defaultsUrl = action.creds.instanceUrl + '/services/data/v42.0/ui-api/record-defaults/create/' + action.apiName + '?formFactor=' + action.context.formFactor;
+  let defaultsUrl = action.creds.instanceUrl + '/services/data/v43.0/ui-api/record-defaults/create/' + action.apiName + '?formFactor=' + action.context.formFactor;
 
   let req = {
     method: 'GET',

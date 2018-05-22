@@ -4,7 +4,7 @@ import { receiveRecentItems } from '../actions'
 
 export default function* recentItemsFetcher(action) {
 
-  let mruUrl = action.creds.instanceUrl + '/services/data/v42.0/recent'
+  let mruUrl = action.creds.instanceUrl + '/services/data/v43.0/recent'
 
   let req = {
     method: 'GET',
