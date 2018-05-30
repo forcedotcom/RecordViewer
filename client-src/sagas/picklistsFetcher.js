@@ -4,7 +4,7 @@ import { receivePicklists } from '../actions'
 
 export default function* picklistsFetcher (action) {
 
-  let url = action.creds.instanceUrl + '/services/data/v42.0/ui-api/object-info/' + action.apiName + '/picklist-values/' + action.recordType + '/';
+  let url = action.creds.instanceUrl + '/services/data/v43.0/ui-api/object-info/' + action.apiName + '/picklist-values/' + action.recordType + '/';
   let req = {
     method: 'GET',
     headers: {
