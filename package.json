@@ -30,7 +30,7 @@
     "serve-static": "^1.10.0",
     "stylus": "^0.54.3",
     "xml2js": "0.4.19",
-    "jquery" : "^2.0.3"
+    "jquery": "^2.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -44,9 +44,9 @@
     "redux-devtools": "^3.3.1"
   },
   "scripts": {
-    "build": "browserify -t [babelify --presets ['env' 'react' 'babel-polyfill' 'stage-2'] ] client-src/root.js -o lib/root.js",
-    "postinstall": "browserify -t [babelify --presets ['env' 'react' 'babel-polyfill' 'stage-2'] ] client-src/root.js -o lib/root.js",
-    "start": "node app.js",
+    "build": "browserify -t [babelify --presets ['env' 'react' 'babel-polyfill' 'stage-2'] ] web/client-src/root.js -o web/lib/root.js",
+    "postinstall": "browserify -t [babelify --presets ['env' 'react' 'babel-polyfill' 'stage-2'] ] web/client-src/root.js -o web/lib/root.js",
+    "start": "node web/app.js",
     "test": "mocha test"
   },
   "homepage": "https://github.com/forcedotcom/RecordViewer",

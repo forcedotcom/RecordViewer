@@ -106,13 +106,20 @@ app.use(session({
 // use morgan for request logging
 app.use(morgan('dev'));
 
-// statically serve SLDS, the files in /public, and the babel-ified js in /lib
-app.use('/libs/salesforce-ux/design-system', serveStatic(__dirname + '/node_modules/@salesforce-ux/design-system/assets'))
-app.use('/libs/jquery', serveStatic(__dirname + '/node_modules/jquery/dist/'))
+// statically serve SLDS, the files in /public, and the babel-ified js in /web/lib
+app.use('/web/libs/salesforce-ux/design-system', serveStatic(__dirname + '/../node_modules/@salesforce-ux/design-system/assets'))
+app.use('/web/libs/jquery', serveStatic(__dirname + '/../node_modules/jquery/dist/'))
 app.use(serveStatic(__dirname + '/public'));
 app.use(serveStatic(__dirname + '/lib'));
 
-// use routers from app/routers/index.js
+// console.log('dir');
+// console.log(__dirname);
+// console.log(serveStatic(__dirname + '/lib'));
+
+console.log(__dirname + '/../node_modules/@salesforce-ux/design-system/assets');
+
+
+// use routers from web/app/routers/index.js
 app.use(require('./app/routers'));
 
 process.on('uncaughtException', function(err) {
