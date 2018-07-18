@@ -1,0 +1,107 @@
+[
+    [
+        "/Users/wade.wegner/p/github/me/RecordViewer/force-app",
+        {
+            "state": "n",
+            "sourcePath": "/Users/wade.wegner/p/github/me/RecordViewer/force-app",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 96,
+            "modifiedTime": 1531923976986,
+            "changeTime": 1531923985526,
+            "contentHash": "b28b7af69320201d1cf206ebf28373980add1451",
+            "isWorkspace": false,
+            "isArtifactRoot": true
+        }
+    ],
+    [
+        "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main",
+        {
+            "state": "n",
+            "sourcePath": "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 96,
+            "modifiedTime": 1531923976986,
+            "changeTime": 1531923976986,
+            "contentHash": "7505d64a54e061b7acd54ccd58b49dc43500b635",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main/default",
+        {
+            "state": "n",
+            "sourcePath": "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main/default",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 128,
+            "modifiedTime": 1531924772484,
+            "changeTime": 1531924772484,
+            "contentHash": "2165a2c7cff2665e22fffbd61ede4b4332f42631",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main/default/aura",
+        {
+            "state": "n",
+            "sourcePath": "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main/default/aura",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 64,
+            "modifiedTime": 1531923976986,
+            "changeTime": 1531923976986,
+            "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main/default/corsWhitelistOrigins",
+        {
+            "state": "n",
+            "sourcePath": "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main/default/corsWhitelistOrigins",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 96,
+            "modifiedTime": 1531924772485,
+            "changeTime": 1531924772485,
+            "contentHash": "1732d973cc3b02bb65ae3f282d9de7023b767634",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main/default/corsWhitelistOrigins/https_localhost_8443.corsWhitelistOrigin-meta.xml",
+        {
+            "state": "n",
+            "sourcePath": "/Users/wade.wegner/p/github/me/RecordViewer/force-app/main/default/corsWhitelistOrigins/https_localhost_8443.corsWhitelistOrigin-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 184,
+            "modifiedTime": 1531924772485,
+            "changeTime": 1531924772485,
+            "contentHash": "a0a190c9166142dc4959e3d0324309d22151490f",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/wade.wegner/p/github/me/RecordViewer",
+        {
+            "state": "n",
+            "sourcePath": "/Users/wade.wegner/p/github/me/RecordViewer",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 640,
+            "modifiedTime": 1531926528875,
+            "changeTime": 1531926528875,
+            "contentHash": "d7d3de50262297df16634985f4067f4013c78a32",
+            "isWorkspace": true,
+            "isArtifactRoot": false
+        }
+    ]
+]
