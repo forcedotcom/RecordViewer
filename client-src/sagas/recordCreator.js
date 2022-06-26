@@ -2,6 +2,8 @@ import { call, put } from 'redux-saga/effects'
 
 import { recordCreateSuccess, showError } from '../actions'
 
+const FIELDS_TO_IGNORE = ['IsCustomerPortal'];
+
 export default function* recordCreator (action) {
 
   let recordDataUrl = action.creds.instanceUrl + '/services/data/v43.0/ui-api/records/';
@@ -9,7 +11,14 @@ export default function* recordCreator (action) {
   var recordInput = {};
   recordInput.apiName = action.apiName;
   recordInput.fields = {};
+
+
   Object.keys(action.editValues).map((field) => {
+
+    if(FIELDS_TO_IGNORE.includes(field)){
+      return;
+    }
+
     let inputValue = action.editValues[field].current;
     if (action.editValues[field].original == null && inputValue == '') {
       // React doesn't like nulls in <select>
